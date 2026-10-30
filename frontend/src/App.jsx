@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 const AGENTS = ["planner", "researcher", "critic", "writer"];
+const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 function App() {
   const [topic, setTopic] = useState("");
   const [events, setEvents] = useState([]);
@@ -13,7 +14,7 @@ function App() {
     setRunning(true);
     setQuestions([]);
     const source = new EventSource(
-      `http://127.0.0.1:8000/stream?topic=${encodeURIComponent(topic)}`
+       `${API}/stream?topic=${encodeURIComponent(topic)}`
     );
     source.onmessage = (e) => {
       const data = JSON.parse(e.data);
